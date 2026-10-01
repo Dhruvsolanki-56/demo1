@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Product image not yet available">
+  <rect width="800" height="600" fill="#111e3c" />
+  <defs>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" opacity="0.12" />
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#dots)" />
+  <g transform="translate(400,300)" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-60" y="-32" width="120" height="64" rx="32" transform="rotate(-45)" />
+    <line x1="-14" y1="-14" x2="14" y2="14" transform="rotate(-45)" />
+  </g>
+</svg>

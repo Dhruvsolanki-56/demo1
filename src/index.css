@@ -1,0 +1,373 @@
+/* Imported once, globally, here rather than from PhoneField.jsx, so it's
+   guaranteed to load before the .PhoneInput* overrides below. */
+@import "react-phone-number-input/style.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-600 font-sans antialiased;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white rounded-sm;
+  }
+
+  ::selection {
+    @apply bg-accent-300 text-primary-950;
+  }
+
+  iframe {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* Content column, ~1290px of copy inside the inset panels. */
+  .container-page {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-10;
+  }
+
+  /* The inset "frame": major blocks sit 10-15px in from the viewport edge as
+     rounded panels instead of running full-bleed. */
+  .frame {
+    @apply mx-2.5 rounded-[20px] sm:mx-[15px] sm:rounded-[26px];
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:rounded-md focus:bg-primary-700 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white;
+  }
+
+  /* ── Buttons ────────────────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-[10px] px-6 py-3 font-sans text-[0.9375rem] font-medium leading-none transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+  }
+
+  /* Warm call-to-action: yellow fill, navy text. Also the button to use on
+     steel-blue panels, where a blue button would disappear. */
+  .btn-accent,
+  .btn-highlight {
+    @apply btn bg-accent-500 text-primary-950 hover:bg-accent-400;
+  }
+
+  .btn-outline {
+    @apply btn border border-primary-600/25 bg-white text-primary-700 hover:border-primary-600 hover:bg-primary-600 hover:text-white;
+  }
+
+  .btn-dark {
+    @apply btn bg-primary-950 text-white hover:bg-primary-900;
+  }
+
+  .btn-ghost {
+    @apply btn text-slate-500 hover:bg-slate-100 hover:text-slate-700;
+  }
+
+  .btn-sm {
+    @apply !px-3 !py-1.5 !text-xs;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 disabled:pointer-events-none disabled:opacity-40;
+  }
+
+  /* Round navy arrow button for carousels and pagers. */
+  .round-btn {
+    @apply inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary-950 text-white transition-colors duration-200 hover:bg-primary-600 disabled:opacity-40 sm:h-14 sm:w-14;
+  }
+
+  .glass {
+    @apply border border-white/50 bg-white/80 backdrop-blur-xl;
+  }
+
+  .glass-dark {
+    @apply border border-white/15 bg-white/10 backdrop-blur-xl;
+  }
+
+  /* ── Rhythm ─────────────────────────────────────────────────────────── */
+  .section-lg {
+    @apply py-20 sm:py-28;
+  }
+
+  .section {
+    @apply py-16 sm:py-24;
+  }
+
+  .section-sm {
+    @apply py-10 sm:py-14;
+  }
+
+  /* Soft grey inset panel. */
+  .section-muted {
+    @apply frame bg-panel;
+  }
+
+  /* Steel-blue inset panel, the page's strongest punctuation. */
+  .section-dark {
+    @apply frame bg-primary-600 text-white;
+  }
+
+  .tap {
+    @apply py-1;
+  }
+
+  /* A quiet grey lead-in with a short yellow rule. */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[0.95rem] font-medium normal-case tracking-normal text-slate-500;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-[3px] w-7 shrink-0 rounded-full bg-accent-500;
+  }
+
+  .section-dark .eyebrow,
+  .eyebrow-invert {
+    @apply text-white/85;
+  }
+
+  .section-title {
+    @apply font-display text-display-sm !font-medium text-primary-600;
+  }
+
+  .section-dark .section-title {
+    @apply text-white;
+  }
+
+  .lead {
+    @apply text-[1.0625rem] leading-relaxed text-slate-500;
+  }
+
+  /* A paragraph set against a yellow rule, the reference's standfirst. */
+  .quote-rule {
+    @apply border-l-[3px] border-accent-500 pl-6 text-slate-700;
+  }
+
+  /* ── Cards ──────────────────────────────────────────────────────────── */
+  /* Base card stays plain; the admin panel uses it for dense data views. */
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white transition-all duration-300 ease-out;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-primary-200;
+  }
+
+  /* Public card: hairline border plus a solid ledge underneath that turns
+     brand blue on hover. */
+  .card-bold {
+    @apply !rounded-[20px] border border-slate-200 bg-white shadow-ledge;
+  }
+
+  .card-bold:hover {
+    @apply shadow-ledge-blue;
+  }
+
+  /* Static information blocks are not clickable, so they should not look or
+     behave like links: flat hairline box, no ledge, no lift, no hover change.
+     Clickable cards (links, buttons) and product cards (.card-solid) keep the
+     ledge and its blue hover. */
+  div.card-bold:not(.card-solid),
+  div.card-bold:not(.card-solid):hover {
+    @apply translate-y-0 border-slate-200 shadow-none;
+  }
+
+  div.card-bold:not(.card-solid):hover .icon-badge {
+    @apply bg-primary-600;
+  }
+
+  /* Non-interactive surface with the same ledge and no hover change. */
+  .shadow-soft {
+    @apply rounded-[20px] border border-slate-200 bg-white shadow-ledge;
+  }
+
+  /* Round brand-blue icon disc. */
+  .icon-badge {
+    @apply relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary-600 text-white transition-colors duration-300;
+  }
+
+  .card:hover .icon-badge {
+    @apply bg-primary-950;
+  }
+
+  /* ── Badges ─────────────────────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+
+  .badge-lime {
+    @apply badge bg-primary-100 text-primary-800;
+  }
+
+  /* ── Forms ──────────────────────────────────────────────────────────── */
+  .input {
+    @apply w-full rounded-[10px] border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 transition-colors placeholder:text-slate-400 focus:border-primary-600 focus:outline-none focus:ring-1 focus:ring-primary-600 disabled:bg-slate-50 disabled:text-slate-400;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-primary-950;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-md bg-slate-200;
+  }
+
+  .PhoneInput {
+    @apply flex w-full items-center gap-2 rounded-[10px] border border-slate-300 bg-white px-4 py-2.5 text-sm transition-colors focus-within:border-primary-600 focus-within:ring-1 focus-within:ring-primary-600;
+  }
+
+  .PhoneInputInput {
+    @apply min-w-0 flex-1 border-0 bg-transparent p-0 text-sm outline-none;
+  }
+
+  .PhoneInputCountry {
+    @apply shrink-0 gap-1.5;
+  }
+
+  /* The country picker is an invisible <select> over the flag; stretch it to
+     the field height so the tap target is large enough. */
+  .PhoneInputCountrySelect {
+    @apply absolute inset-y-0 left-0 h-full min-h-[2.5rem] w-full;
+  }
+
+  /* Only the outer .PhoneInput container should ever draw a focus ring. */
+  .PhoneInputInput:focus,
+  .PhoneInputInput:focus-visible,
+  .PhoneInputCountrySelect:focus,
+  .PhoneInputCountrySelect:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .PhoneInputCountrySelect:focus + .PhoneInputCountrySelectArrow {
+    @apply text-primary-600;
+  }
+
+  .bg-brand-hero {
+    @apply bg-primary-600;
+  }
+
+  .bg-hero-field {
+    @apply bg-white;
+  }
+
+  /* Rounded media frame. */
+  .notch-media {
+    @apply relative overflow-hidden rounded-[22px];
+  }
+
+  .prose-emphasis strong,
+  .prose-emphasis b {
+    @apply font-semibold text-primary-950;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes ctaPulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.animate-cta-pulse {
+  animation: ctaPulseRing 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Slow drift for hero backdrops. */
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, 6%) scale(1.08); }
+}
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, 4%) scale(1.05); }
+}
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, -5%) scale(1.1); }
+}
+
+.animate-blob-drift-1 { animation: blobDrift1 18s ease-in-out infinite; }
+.animate-blob-drift-2 { animation: blobDrift2 22s ease-in-out infinite 1s; }
+.animate-blob-drift-3 { animation: blobDrift3 26s ease-in-out infinite 2s; }
+
+/* Hero slide image: a slow push while the slide is on screen. */
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.animate-slow-zoom {
+  animation: slowZoom 7s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cta-pulse,
+  .animate-blob-drift-1,
+  .animate-blob-drift-2,
+  .animate-blob-drift-3,
+  .animate-slow-zoom {
+    animation: none;
+  }
+}
+
+.prose :where(p) {
+  @apply mb-3 leading-relaxed;
+}
+.prose :where(ul) {
+  @apply mb-3 list-disc pl-5;
+}
+.prose :where(ol) {
+  @apply mb-3 list-decimal pl-5;
+}
+.prose :where(h2) {
+  @apply mb-2 mt-5 text-xl font-medium text-primary-600;
+}
+.prose :where(h3) {
+  @apply mb-2 mt-4 text-lg font-medium text-primary-600;
+}
+.prose :where(a) {
+  @apply text-primary-600 underline;
+}
