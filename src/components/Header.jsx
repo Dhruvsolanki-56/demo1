@@ -173,7 +173,7 @@ export default function Header() {
         transition={{ duration: reduced ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <div
-          className={`flex h-[76px] items-center justify-between gap-4 rounded-[20px] bg-primary-600 pl-3 pr-3 transition-shadow duration-300 sm:rounded-[24px] sm:pl-4 sm:pr-4 lg:h-[92px] lg:pl-5 lg:pr-5 ${
+          className={`flex items-center justify-between gap-4 rounded-[20px] bg-primary-600 pl-3 pr-3 transition-[height,box-shadow] duration-300 sm:rounded-[24px] sm:pl-4 sm:pr-4 lg:pl-5 lg:pr-5 ${scrolled ? "h-[68px] lg:h-[78px]" : "h-[76px] lg:h-[92px]"} ${
             scrolled ? "shadow-[0_14px_40px_-18px_rgba(5,27,46,0.55)]" : ""
           }`}
         >

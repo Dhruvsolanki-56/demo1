@@ -161,6 +161,18 @@
   }
 
   /* A paragraph set against a yellow rule, the reference's standfirst. */
+  /* Yellow ink band under a highlighted phrase; its width is animated. */
+  .hl {
+    @apply text-inherit;
+  }
+
+  .sweep {
+    background-image: linear-gradient(theme("colors.accent.300"), theme("colors.accent.300"));
+    background-repeat: no-repeat;
+    background-position: 0 90%;
+    padding: 0 0.04em;
+  }
+
   .quote-rule {
     @apply border-l-[3px] border-accent-500 pl-6 text-slate-700;
   }

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { RevealText } from "../motion/Reveal";
 import { ArrowButton } from "../motion/Parallax";
 import { usePrefersReducedMotion } from "../motion/SmoothScroll";
 
@@ -40,10 +41,10 @@ export default function HeroSlider({ slides }) {
         <motion.div
           key={index}
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: reduced ? 0 : 1.1, ease: "easeInOut" }}
+          initial={reduced ? { opacity: 0 } : { clipPath: "inset(0% 0% 0% 100%)", zIndex: 2 }}
+          animate={reduced ? { opacity: 1 } : { clipPath: "inset(0% 0% 0% 0%)", zIndex: 2 }}
+          exit={reduced ? { opacity: 0 } : { zIndex: 1, transition: { duration: 1.2 } }}
+          transition={{ duration: reduced ? 0.3 : 1.2, ease: EASE }}
         >
           <img
             src={slide.image}
@@ -80,7 +81,7 @@ export default function HeroSlider({ slides }) {
                     className="font-display font-medium leading-[1.06] tracking-[-0.01em] text-white"
                     style={{ fontSize: "clamp(2.3rem, 4.8vw, 4.4rem)" }}
                   >
-                    {slide.title}
+                    <RevealText text={slide.title} immediate delay={0.2} />
                   </h1>
                 ) : (
                   <h2
@@ -88,7 +89,7 @@ export default function HeroSlider({ slides }) {
                     className="font-display font-medium leading-[1.06] tracking-[-0.01em] text-white"
                     style={{ fontSize: "clamp(2.3rem, 4.8vw, 4.4rem)" }}
                   >
-                    {slide.title}
+                    <RevealText text={slide.title} immediate delay={0.2} />
                   </h2>
                 ),
                 slide.text && (

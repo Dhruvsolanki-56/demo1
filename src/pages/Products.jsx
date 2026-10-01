@@ -305,7 +305,14 @@ export default function Products() {
                 </div>
               ) : (
                 <div className={`transition-opacity duration-150 ${loading ? "opacity-50 pointer-events-none" : ""}`}>
-                  <p className="text-sm font-semibold text-primary-900 mb-4">{result.total} product(s) found</p>
+                  <p className="text-sm font-semibold text-primary-900 mb-4">
+                    {result.total} product(s) found
+                    {result.sample && (
+                      <span className="ml-2 font-normal text-slate-500">
+                        (sample catalogue for preview; the live site lists the full range)
+                      </span>
+                    )}
+                  </p>
                   {/* Was capped at 3 columns to leave room for the sidebar
                       column beside it; with the sidebar gone the grid gets
                       the full container width, so a 4th column at `xl:`

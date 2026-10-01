@@ -7,6 +7,7 @@ import BackToTopButton from "./BackToTopButton";
 import PageLoader from "./PageLoader";
 import { trackPageView } from "../lib/siteMetrics";
 import SmoothScroll, { useLenis } from "./motion/SmoothScroll";
+import { RouteProgress } from "./motion/Premium";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ export default function PublicLayout() {
       <div className="flex min-h-screen flex-col">
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <ScrollToTop />
+        <RouteProgress />
         <Header />
         {/* Reserves the floating header's height (plus the frame gutter) so
             every page starts just below it without its own offset. */}

@@ -14,6 +14,7 @@ import Reveal, { RevealGroup } from "../components/motion/Reveal";
 import CountUp from "../components/motion/CountUp";
 import { ArrowButton, Marquee } from "../components/motion/Parallax";
 import HeroSlider from "../components/sections/HeroSlider";
+import { ClipReveal, ScrollScale, Spotlight, Sweep } from "../components/motion/Premium";
 import ContactBand from "../components/sections/ContactBand";
 
 // Figures traceable to the seeded company copy -- no invented metrics. The
@@ -293,14 +294,16 @@ export default function Home() {
       <section className="section">
         <div className="container-page grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal className="relative pb-16 sm:pl-10 lg:pb-20">
-            <div className="overflow-hidden rounded-[24px]">
-              <img
-                src="/company_intro.png"
-                alt="Production floor at our manufacturing facility"
-                loading="lazy"
-                className="aspect-square w-full object-cover sm:aspect-[6/5]"
-              />
-            </div>
+            <ClipReveal className="relative aspect-square overflow-hidden rounded-[24px] sm:aspect-[6/5]">
+              <ScrollScale className="absolute inset-0" from={1.15}>
+                <img
+                  src="/company_intro.png"
+                  alt="Production floor at our manufacturing facility"
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </ScrollScale>
+            </ClipReveal>
             <div className="absolute -left-2 -top-6 hidden w-[38%] overflow-hidden rounded-[20px] border-[6px] border-white shadow-[0_20px_40px_-20px_rgba(5,27,46,0.45)] sm:block">
               <img src="/quality_intro.png" alt="" aria-hidden="true" loading="lazy" className="aspect-square w-full object-cover" />
             </div>
@@ -311,7 +314,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="section-title">A healthcare company built around manufacturing</h2>
+            <h2 className="section-title">A healthcare company built around <Sweep>manufacturing</Sweep></h2>
             <p className="quote-rule mt-8 text-[1.02rem] leading-[1.8]">{HOME_INTRO_TEASER}</p>
             <p className="mt-6 text-[1.02rem] leading-[1.8] text-slate-500">
               We work with distributors, hospitals, governments and brand owners, and we keep those relationships for
@@ -336,9 +339,9 @@ export default function Home() {
             <ArrowButton to="/product-portfolio" variant="outline">Portfolio Overview</ArrowButton>
           </div>
           <RevealGroup className="mt-12 grid gap-7 md:grid-cols-3" stagger={0.08}>
-            {PORTFOLIO.map((p) => (
+            {PORTFOLIO.map((p, i) => (
               <Link key={p.title} to={p.to} className="card-bold group flex h-full flex-col overflow-hidden p-4">
-                <div className="aspect-[16/11] overflow-hidden rounded-[16px] bg-panel">
+                <ClipReveal delay={i * 0.12} className="aspect-[16/11] overflow-hidden rounded-[16px] bg-panel">
                   <img
                     src={p.image}
                     alt=""
@@ -346,7 +349,7 @@ export default function Home() {
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                   />
-                </div>
+                </ClipReveal>
                 <div className="flex flex-1 flex-col px-3 pb-3 pt-6">
                   <h3 className="font-display text-[1.45rem] font-medium leading-snug text-primary-950">{p.title}</h3>
                   <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-slate-500">{p.description}</p>
@@ -365,7 +368,7 @@ export default function Home() {
         <div className="container-page">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <h2 className="section-title">Our manufacturing hub in India</h2>
+              <h2 className="section-title">Our manufacturing hub in <Sweep>India</Sweep></h2>
               <p className="mt-6 text-[1.02rem] leading-[1.8] text-slate-500">
                 WHO-GMP systems, several dosage forms and in-house product development let us take on a wide spread
                 of molecules and therapy areas, for both regulated and emerging markets.
@@ -375,14 +378,16 @@ export default function Home() {
               </div>
             </Reveal>
             <Reveal delay={0.1} className="lg:col-span-7">
-              <div className="overflow-hidden rounded-[24px] bg-panel">
-                <img
-                  src="/banners/pharma_manufacturing.png"
-                  alt="Automated production line"
-                  loading="lazy"
-                  className="aspect-[16/10] w-full object-cover"
-                />
-              </div>
+              <ClipReveal from="left" className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-panel">
+                <ScrollScale className="absolute inset-0" from={1.15}>
+                  <img
+                    src="/banners/pharma_manufacturing.png"
+                    alt="Automated production line"
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </ScrollScale>
+              </ClipReveal>
             </Reveal>
           </div>
 
@@ -405,7 +410,7 @@ export default function Home() {
         <div className="container-page grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
             <Reveal>
-              <h2 className="section-title">Five business divisions</h2>
+              <h2 className="section-title"><Sweep>Five</Sweep> business divisions</h2>
               <p className="mb-8 mt-4 text-[1.02rem] leading-relaxed text-slate-500">
                 Supporting healthcare systems, distributors and institutional partners, from finished formulations
                 to hospital supplies.
@@ -444,7 +449,8 @@ export default function Home() {
         <img src="/showcase/institutional.jpg" alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-primary-950/30" />
         <div className="relative px-4 py-5 sm:px-10 sm:py-10">
-          <Reveal className="grid gap-10 rounded-[22px] bg-accent-500 px-6 py-10 sm:px-12 sm:py-14 lg:grid-cols-12 lg:gap-12">
+          <Reveal>
+          <Spotlight className="grid gap-10 overflow-hidden rounded-[22px] bg-accent-500 px-6 py-10 sm:px-12 sm:py-14 lg:grid-cols-12 lg:gap-12" color="rgba(255,255,255,0.45)">
             <div className="lg:col-span-5">
               <h2 className="section-title">Why partners choose us</h2>
               <p className="mt-5 text-[1.02rem] leading-relaxed text-primary-950">
@@ -463,6 +469,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+          </Spotlight>
           </Reveal>
         </div>
       </section>
@@ -542,9 +549,11 @@ export default function Home() {
             </div>
           </Reveal>
           <div className="lg:col-span-5">
-            <div className="overflow-hidden rounded-[20px]">
-              <img src="/partnership_cta.png" alt="" aria-hidden="true" loading="lazy" className="aspect-[4/3] w-full object-cover lg:aspect-[5/6]" />
-            </div>
+            <ClipReveal className="relative aspect-[4/3] overflow-hidden rounded-[20px] lg:aspect-[5/6]">
+              <ScrollScale className="absolute inset-0" from={1.15}>
+                <img src="/partnership_cta.png" alt="" aria-hidden="true" loading="lazy" className="h-full w-full object-cover" />
+              </ScrollScale>
+            </ClipReveal>
           </div>
         </div>
       </section>

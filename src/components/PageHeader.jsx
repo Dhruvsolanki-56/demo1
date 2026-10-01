@@ -3,7 +3,8 @@ import { useLocation } from "react-router-dom";
 import { Phone, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "./Breadcrumbs";
-import Reveal from "./motion/Reveal";
+import Reveal, { RevealText } from "./motion/Reveal";
+import { ClipReveal, ScrollScale } from "./motion/Premium";
 import { useSiteSettings } from "../context/SiteSettingsContext";
 import { TAGLINE } from "../data/siteContent";
 
@@ -110,14 +111,18 @@ export default function PageHeader({
     <section className="frame relative overflow-hidden border border-slate-200 bg-white shadow-ledge">
       {/* Banner */}
       <div className="relative h-[260px] overflow-hidden sm:h-[300px] lg:h-[340px]">
-        <img
-          src={banner}
-          alt=""
-          aria-hidden="true"
-          loading="eager"
-          fetchpriority="high"
-          className="animate-slow-zoom absolute inset-0 h-full w-full object-cover"
-        />
+        <ClipReveal immediate className="absolute inset-0">
+          <ScrollScale className="h-full w-full" from={1.12}>
+            <img
+              src={banner}
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              fetchpriority="high"
+              className="h-full w-full object-cover"
+            />
+          </ScrollScale>
+        </ClipReveal>
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-primary-950/35 to-primary-950/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary-950/55 via-transparent to-transparent" />
 
@@ -128,7 +133,7 @@ export default function PageHeader({
                 className="font-display font-medium leading-[1.05] tracking-[-0.01em] text-white [text-shadow:0_2px_24px_rgba(5,27,46,0.35)]"
                 style={{ fontSize: "clamp(2.1rem, 4.6vw, 4rem)" }}
               >
-                {title}
+                <RevealText text={title} immediate delay={0.25} />
               </h1>
             </div>
             {!noBreadcrumbs && (
