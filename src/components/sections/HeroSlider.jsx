@@ -37,6 +37,9 @@ export default function HeroSlider({ slides }) {
       aria-roledescription="carousel"
       aria-label="Highlights"
     >
+      {/* Own stacking context: the wipe raises the incoming slide with a
+          z-index, which must stay below the overlays and the copy. */}
+      <div className="absolute inset-0 isolate">
       <AnimatePresence initial={false}>
         <motion.div
           key={index}
@@ -55,6 +58,7 @@ export default function HeroSlider({ slides }) {
           />
         </motion.div>
       </AnimatePresence>
+      </div>
 
       <div className="absolute inset-0 bg-gradient-to-r from-primary-950/90 via-primary-950/55 to-primary-950/5" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-primary-950/60 to-transparent" />

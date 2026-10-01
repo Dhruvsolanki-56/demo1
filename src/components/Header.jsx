@@ -101,6 +101,10 @@ export default function Header() {
   const [expanded, setExpanded] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [pinned, setPinned] = useState(true);
+  // After a dropdown link is clicked the pointer (and focus) is still on the
+  // menu, so CSS hover/focus would keep it open on the new page. Hold it shut
+  // until the pointer leaves that menu item.
+  const [suppressed, setSuppressed] = useState(null);
   const { items } = useQuoteCart();
   const { settings } = useSiteSettings();
   const { pathname } = useLocation();
@@ -115,6 +119,7 @@ export default function Header() {
 
   useEffect(() => {
     setOpen(false);
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     setExpanded(null);
   }, [pathname]);
 
@@ -186,8 +191,13 @@ export default function Header() {
               {NAV_LINKS.map((link) => {
                 const active = isSectionActive(link, pathname);
                 return (
-                  <li key={link.label} className="group relative">
+                  <li
+                    key={link.label}
+                    className="group relative"
+                    onMouseLeave={() => setSuppressed((cur) => (cur === link.label ? null : cur))}
+                  >
                     <NavLink
+                      onClick={() => setSuppressed(link.label)}
                       to={link.to}
                       className="relative flex items-center gap-1.5 rounded-lg px-3 py-3 text-[0.97rem] font-semibold text-white transition-colors hover:text-accent-300 xl:px-4"
                     >
@@ -203,13 +213,14 @@ export default function Header() {
                     </NavLink>
 
                     {link.children && (
-                      <div className="invisible absolute left-1/2 top-full z-10 w-80 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className={`invisible absolute left-1/2 top-full z-10 w-80 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-200 ${suppressed === link.label ? "" : "group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"}`}>
                         <ul className="overflow-hidden rounded-[18px] border border-slate-100 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(5,27,46,0.4)]">
                           {link.children.map((child) => (
                             <li key={child.to}>
                               <NavLink
                                 to={child.to}
                                 end
+                                onClick={() => setSuppressed(link.label)}
                                 className={({ isActive }) =>
                                   `group/item flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-[0.92rem] font-medium transition-colors ${
                                     isActive
@@ -287,6 +298,11 @@ export default function Header() {
             <motion.div
               key="drawer"
               id="site-menu"
+              onClick={(e) => {
+                // Any link closes the drawer, including one to the page
+                // already open (no route change to close it otherwise).
+                if (e.target instanceof Element && e.target.closest("a")) setOpen(false);
+              }}
               role="dialog"
               aria-modal="true"
               aria-label="Site menu"
